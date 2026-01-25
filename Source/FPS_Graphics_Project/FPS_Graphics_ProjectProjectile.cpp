@@ -67,7 +67,7 @@ void AFPS_Graphics_ProjectProjectile::OnHit(UPrimitiveComponent* HitComp, AActor
 	}
 
 	if (OtherActor != nullptr) {
-		if (colorP) {
+		if (colorP) { // Check if the particle system is valid in order to spawn it
 			UNiagaraComponent* particleComp = UNiagaraFunctionLibrary::SpawnSystemAttached(colorP, HitComp, NAME_None, FVector(-20.f, 0.f, 0.f), FRotator(0.f), EAttachLocation::KeepRelativeOffset, true);
 			particleComp->SetNiagaraVariableLinearColor(FString("RandomColor"), randColor);
 			ballMesh->DestroyComponent();
