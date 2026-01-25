@@ -8,6 +8,7 @@
 
 class USphereComponent;
 class UProjectileMovementComponent;
+class UNiagaraSystem;
 
 UCLASS(config=Game)
 class AFPS_Graphics_ProjectProjectile : public AActor
@@ -30,6 +31,10 @@ class AFPS_Graphics_ProjectProjectile : public AActor
 
 	UPROPERTY()
 	FLinearColor randColor;
+
+
+	UPROPERTY(EditAnywhere)
+	UNiagaraSystem* colorP;
 
 	UPROPERTY(EditAnywhere)
 	UMaterialInterface* projMat;

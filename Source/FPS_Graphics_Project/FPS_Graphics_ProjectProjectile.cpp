@@ -6,6 +6,9 @@
 #include "Components/SphereComponent.h"
 #include "Components/DecalComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
+
 
 AFPS_Graphics_ProjectProjectile::AFPS_Graphics_ProjectProjectile() 
 {
@@ -64,6 +67,13 @@ void AFPS_Graphics_ProjectProjectile::OnHit(UPrimitiveComponent* HitComp, AActor
 	}
 
 	if (OtherActor != nullptr) {
+		if (colorP) {
+			UNiagaraComponent* particleComp = UNiagaraFunctionLibrary::SpawnSystemAttached(colorP, HitComp, NAME_None, FVector(-20.f, 0.f, 0.f), FRotator(0.f), EAttachLocation::KeepRelativeOffset, true);
+			particleComp->SetNiagaraVariableLinearColor(FString("RandomColor"), randColor);
+			ballMesh->DestroyComponent();
+			CollisionComp->BodyInstance.SetCollisionProfileName("NoCollision");
+		}
+
 		// Creates a decal that uses a random size between 20 and 40 units that spawns at the hit location.
 		auto Decal = UGameplayStatics::SpawnDecalAtLocation(GetWorld(), baseMat, FVector(UKismetMathLibrary::RandomFloatInRange(20.f, 40.f)), Hit.Location, Hit.Normal.Rotation(), 0.f);
 		auto MatInstance = Decal->CreateDynamicMaterialInstance();
