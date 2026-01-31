@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
+#include "PerlinProcTerrain.h"
 
 
 AFPS_Graphics_ProjectProjectile::AFPS_Graphics_ProjectProjectile() 
@@ -82,5 +83,11 @@ void AFPS_Graphics_ProjectProjectile::OnHit(UPrimitiveComponent* HitComp, AActor
 		// Sets both the color value to the randColor variable set up in BeginPlay and the frameNum that decides what type of decal is shown.
 		MatInstance->SetVectorParameterValue("Color", randColor);
 		MatInstance->SetScalarParameterValue("Frame", frameNum);
+
+		APerlinProcTerrain* procTerrain = Cast<APerlinProcTerrain>(OtherActor);
+
+		if (procTerrain) {
+			procTerrain->AlterMesh(Hit.ImpactPoint);
+		}
 	}
 }
